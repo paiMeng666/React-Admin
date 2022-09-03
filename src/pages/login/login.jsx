@@ -40,7 +40,7 @@ export default function Login() {
             name="password"
             rules={[{ required: true, message: "Please input your Username!",validateTrigger:['onBlur'] },
             {min:4,message:'密码至少4位'},{max:12,message:'密码最多12位',validateTrigger:['onBlur']},
-            {pattern:/^[a-zA-Z0-9_]+$/,message:'密码必须是英文、数字和下划线',validateTrigger:['onBlur']}
+            {pattern:/^[a-zA-Z0-9_]+$/,message:'密码必须是英文、数字和下划线组成',validateTrigger:['onBlur']}
             
           ]}
           >
