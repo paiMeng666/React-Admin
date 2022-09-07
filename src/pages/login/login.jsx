@@ -1,14 +1,34 @@
 import React from "react";
 import "./login.scss";
+import { Redirect } from "react-router-dom";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, message } from "antd";
+import { reqLogin } from "../../api/index";
+import "../../api/mock";
+import memoryUtils from "../untils/memoryUtils";
+import storgeUntils from "../untils/storgeUntils";
 
 /** 登录的路由组件 */
-export default function Login() {
-  const [form] = Form.useForm()
-  const onFinish = (value) => {
-    console.log(value);
+export default function Login(props) {
+  // 如果用户登录，跳转到管理界面
+  const [form] = Form.useForm();
+  const onFinish = async (value) => {
+    const res = await reqLogin(value, "POST");
+    console.log("res", res);
+    if (res.data.success) {
+      message.success("登录成功");
+      const user = res?.data?.data;
+      console.log('user',user)
+      storgeUntils.saveUser(user); //保存到本地
+      props.history.replace("/admin");
+    } else {
+      message.error("登录失败");
+    }
   };
+  const user = memoryUtils.user;
+  if (user.userId) {
+    return <Redirect to="/admin"></Redirect>;
+  }
   return (
     <div className="login">
       <header className="login-header">
@@ -25,11 +45,24 @@ export default function Login() {
         >
           <Form.Item
             name="username"
-            rules={[{ required: true, message: "Please input your Username!",validateTrigger:['onBlur'] },
-            {min:4,message:'用户名至少4位'},{max:12,message:'用户名最多12位',validateTrigger:['onBlur']},
-            {pattern:/^[a-zA-Z0-9_]+$/,message:'用户名必须是英文、数字和下划线',validateTrigger:['onBlur']}
-            
-          ]}
+            rules={[
+              {
+                required: true,
+                message: "Please input your Username!",
+                validateTrigger: ["onBlur"],
+              },
+              { min: 4, message: "用户名至少4位" },
+              {
+                max: 12,
+                message: "用户名最多12位",
+                validateTrigger: ["onBlur"],
+              },
+              {
+                pattern: /^[a-zA-Z0-9_]+$/,
+                message: "用户名必须是英文、数字和下划线",
+                validateTrigger: ["onBlur"],
+              },
+            ]}
           >
             <Input
               prefix={<UserOutlined className="site-form-item-icon" />}
@@ -38,11 +71,20 @@ export default function Login() {
           </Form.Item>
           <Form.Item
             name="password"
-            rules={[{ required: true, message: "Please input your Username!",validateTrigger:['onBlur'] },
-            {min:4,message:'密码至少4位'},{max:12,message:'密码最多12位',validateTrigger:['onBlur']},
-            {pattern:/^[a-zA-Z0-9_]+$/,message:'密码必须是英文、数字和下划线组成',validateTrigger:['onBlur']}
-            
-          ]}
+            rules={[
+              {
+                required: true,
+                message: "Please input your Username!",
+                validateTrigger: ["onBlur"],
+              },
+              { min: 4, message: "密码至少4位" },
+              { max: 12, message: "密码最多12位", validateTrigger: ["onBlur"] },
+              {
+                pattern: /^[a-zA-Z0-9_]+$/,
+                message: "密码必须是英文、数字和下划线组成",
+                validateTrigger: ["onBlur"],
+              },
+            ]}
           >
             <Input
               prefix={<LockOutlined className="site-form-item-icon" />}

@@ -6,8 +6,8 @@ import Admin from "./pages/admin/admin";
 function App() {
   return (
     <BrowserRouter>
-      <Route path='/login' component={Login} ></Route>
-      <Route path='/admin' component={Admin} ></Route>
+      <Route path="/login" component={Login}></Route>
+      <Route path="/admin" component={Admin}></Route>
     </BrowserRouter>
   );
 }
