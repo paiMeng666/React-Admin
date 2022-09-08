@@ -1,3 +1,31 @@
 .header {
     height: 80px;
+    .header-top {
+        height: 40px;
+        border-bottom: 1px solid #1da57a;
+        text-align: right;
+        line-height: 40px;
+        padding-right: 24px;
+        .user-name {
+            margin: 0 10px;
+        }
+    }
+    .header-bottom {
+        height: 40px;
+        display: flex;
+        align-items: center;
+        padding-right: 24px;
+        .header-bottom-left {
+            text-align: center;
+            width: 25%;
+            font-size: 30px;
+        }
+        .header-bottom-right {
+            text-align: right;
+            width: 75%;
+            .weather {
+                margin-left: 10px;
+            }
+        }
+    }
 }

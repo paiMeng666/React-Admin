@@ -1,5 +1,6 @@
 import React from "react";
 import "./index.scss";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   AppstoreOutlined,
   ContainerOutlined,
@@ -21,7 +22,7 @@ function getItem(label, key, icon, children, type) {
 const list = [
   {
     label: "首页",
-    key: "1",
+    key: "home",
     icon: <PieChartOutlined />,
   },
   {
@@ -31,22 +32,22 @@ const list = [
     children: [
       {
         label: "品类管理",
-        key: "5",
+        key: "category",
       },
       {
         label: "商品管理",
-        key: "6",
+        key: "product",
       },
     ],
   },
   {
     label: "用户管理",
-    key: "2",
+    key: "user",
     icon: <ContainerOutlined />,
   },
   {
     label: "角色管理",
-    key: "3",
+    key: "role",
     icon: <DesktopOutlined />,
   },
   {
@@ -56,15 +57,15 @@ const list = [
     children: [
       {
         label: "柱状图",
-        key: "9",
+        key: "charts/bar",
       },
       {
-        label: "柱状图",
-        key: "10",
+        label: "饼图",
+        key: "charts/pie",
       },
       {
-        label: "柱状图",
-        key: "sub3",
+        label: "折线图",
+        key: "charts/line",
       },
     ],
   },
@@ -74,17 +75,21 @@ const items = list.map((item) => {
   const { label, key, icon, children, type } = item;
   return getItem(label, key, icon, children, type);
 });
-console.log("items", items);
 
-export default function LeftNav() {
+export default function LeftNav(props) {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
   return (
     <div className="left-nav">
       <Menu
-        defaultSelectedKeys={["1"]}
-        defaultOpenKeys={["sub1"]}
+        defaultSelectedKeys={["home"]}
         mode="inline"
         theme="dark"
         items={items}
+        onClick={({ key }) => {
+          navigate(key);
+        }}
       />
     </div>
   );

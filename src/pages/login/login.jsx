@@ -1,34 +1,30 @@
 import React from "react";
 import "./login.scss";
-import { Redirect } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input, message } from "antd";
 import { reqLogin } from "../../api/index";
 import "../../api/mock";
-import memoryUtils from "../untils/memoryUtils";
 import storgeUntils from "../untils/storgeUntils";
 
 /** 登录的路由组件 */
 export default function Login(props) {
   // 如果用户登录，跳转到管理界面
   const [form] = Form.useForm();
+  const navigate = useNavigate();
   const onFinish = async (value) => {
     const res = await reqLogin(value, "POST");
-    console.log("res", res);
     if (res.data.success) {
       message.success("登录成功");
       const user = res?.data?.data;
-      console.log('user',user)
+      console.log("user", user);
       storgeUntils.saveUser(user); //保存到本地
-      props.history.replace("/admin");
+      navigate("/")
     } else {
       message.error("登录失败");
     }
   };
-  const user = memoryUtils.user;
-  if (user.userId) {
-    return <Redirect to="/admin"></Redirect>;
-  }
+  
   return (
     <div className="login">
       <header className="login-header">
