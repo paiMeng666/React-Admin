@@ -1,6 +1,5 @@
 import React from "react";
-import memoryUtils from "../untils/memoryUtils";
-import { Navigate,Outlet  } from "react-router-dom";
+import {Outlet  } from "react-router-dom";
 import { Layout } from "antd";
 import LeftNav from "../../component/left-nav/left-nav";
 import Header from "../../component/header/header";

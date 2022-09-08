@@ -4,7 +4,7 @@ const myAxios = axios.create({
   timeout: 3000,
 });
 
-export default function ajax(url, data, method = "GET") {
+export default function ajax(url, data ={}, method = "GET") {
   return new Promise((resolve, reject) => {
     if (method === "GET") {
       myAxios

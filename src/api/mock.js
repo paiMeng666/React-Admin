@@ -12,3 +12,18 @@ mockjs.mock("test/login", "post", {
     password: /^[a-zA-Z0-9_]{4,12}$/,
   },
 });
+
+mockjs.mock('manage/category/list','get',{
+  success: "@boolean(1, 9, false)",
+  errorCode: "@integer(0, 10)",
+  message: "@cword(2,10)",
+  total:40,
+    "data|10":[
+      {
+        parentId:"@integer(0, 2)",
+        id:"@id",
+        name:"@cword(2,10)",
+        _v:"@integer(0, 2)",
+      }
+  ]
+})

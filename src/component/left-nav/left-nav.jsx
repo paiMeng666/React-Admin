@@ -1,6 +1,6 @@
 import React from "react";
 import "./index.scss";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   AppstoreOutlined,
   ContainerOutlined,
@@ -78,7 +78,6 @@ const items = list.map((item) => {
 
 export default function LeftNav(props) {
   const navigate = useNavigate();
-  const { pathname } = useLocation();
 
   return (
     <div className="left-nav">
@@ -87,8 +86,8 @@ export default function LeftNav(props) {
         mode="inline"
         theme="dark"
         items={items}
-        onClick={({ key }) => {
-          navigate(key);
+        onClick={({key}) => {
+          navigate(key,{state:key});
         }}
       />
     </div>
