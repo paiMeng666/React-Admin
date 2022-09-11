@@ -5,8 +5,8 @@ export const reqLogin = (username, password) => {
 };
 
 /**获取分类的列表 */
-export  const  reqCategorys = (data)=>{
-  return ajax('manage/category/list',data)
+export  const  reqCategorys = (parentId)=>{
+  return ajax('manage/category/list',{parentId},'POST')
 }
 
 /**添加分类 */

@@ -13,14 +13,15 @@ mockjs.mock("test/login", "post", {
   },
 });
 
-mockjs.mock('manage/category/list','get',{
+mockjs.mock('manage/category/list','post',{
   success: "@boolean(1, 9, false)",
   errorCode: "@integer(0, 10)",
   message: "@cword(2,10)",
   total:40,
     "data|10":[
       {
-        parentId:"@integer(0, 2)",
+        parentId:"@integer(0, 3)",
+        parentName:"@cword(2,10)",
         id:"@id",
         name:"@cword(2,10)",
         _v:"@integer(0, 2)",
