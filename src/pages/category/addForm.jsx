@@ -7,15 +7,15 @@ export default function AddForm(props) {
   const options = [
     {
       label: "一级分类",
-      value: "A",
+      value: "0",
     },
     {
-      label: "B",
-      value: "B",
+      label: "电脑",
+      value: "1",
     },
     {
-      label: "C",
-      value: "C",
+      label: "图书",
+      value: "2",
     },
   ];
   const addOnFinish = (value) => {
@@ -27,10 +27,12 @@ export default function AddForm(props) {
         name="add"
         form={form}
         onFinish={addOnFinish}
-        initialValues={{ a: "A" }}
+        initialValues={{ category: "0" }}
+        layout='vertical'
       >
         <Item
-          name="a"
+          name="category"
+          label='所属分类'
           rules={[
             {
               required: true,
@@ -42,7 +44,8 @@ export default function AddForm(props) {
           <Select options={options}></Select>
         </Item>
         <Item
-          name="b"
+          name="inputName"
+          label='分类名称'
           rules={[
             {
               required: true,

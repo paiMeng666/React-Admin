@@ -10,7 +10,7 @@ export default function UpdateForm(props) {
     <div>
       <Form name="update" form={form} onFinish={updateOnFinish}>
         <Item
-          name="b"
+          name="category"
           rules={[
             {
               required: true,

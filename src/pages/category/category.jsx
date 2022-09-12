@@ -23,7 +23,8 @@ export default function Category() {
   const showAddModal = () => {
     setIsModalOpen(1);
   };
-  const showUpdateModal = () => {
+  const showUpdateModal = (name) => {
+    updateForm.setFieldsValue({ category: name || "" });
     setIsModalOpen(2);
   };
 
@@ -80,7 +81,7 @@ export default function Category() {
       key: "age",
       render: (text) => (
         <Space size="middle">
-          <Button type="link" onClick={showUpdateModal}>
+          <Button type="link" onClick={() => showUpdateModal(text?.name)}>
             修改分类
           </Button>
           {parentId === 0 ? (
