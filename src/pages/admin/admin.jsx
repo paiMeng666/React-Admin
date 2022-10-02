@@ -9,7 +9,7 @@ const { Footer, Sider, Content } = Layout;
 /**后台的管理组件 */
 export default function Admin() {
   return (
-    <Layout style={{ height: "100%" }}>
+    <Layout style={{ minHeight: "100%" }}>
       <Sider>
         <LeftNav></LeftNav>
       </Sider>

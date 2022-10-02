@@ -87,7 +87,7 @@ export default function LeftNav(props) {
         theme="dark"
         items={items}
         onClick={({key}) => {
-          navigate(key,{state:key});
+          navigate(key);
         }}
       />
     </div>

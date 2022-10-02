@@ -1,4 +1,7 @@
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import {
+  Navigate,
+  useRoutes,
+} from "react-router-dom";
 import "./App.css";
 import Login from "./pages/login/login";
 import Admin from "./pages/admin/admin";
@@ -15,29 +18,73 @@ import AddProduct from "./pages/product/addProduct";
 import ProductDetail from "./pages/product/productDetail";
 import ProductHome from "./pages/product/productHome";
 function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Admin />}>
-          <Route path="home" element={<Home />}></Route>
-          <Route path="category" element={<Category />}></Route>
-          <Route path="product" element={<Product />}>
-            <Route path="/product" element={<ProductHome />}></Route>
-            <Route path="add" element={<AddProduct />}></Route>
-            <Route path="detail" element={<ProductDetail />}></Route>
-          </Route>
-          <Route path="role" element={<Role />}></Route>
-          <Route path="user" element={<User />}></Route>
-          <Route path="charts/bar" element={<Bar />}></Route>
-          <Route path="charts/line" element={<Line />}></Route>
-          <Route path="charts/pie" element={<Pie />}></Route>
-          <Route path="/" element={<Navigate to="home" />}></Route>
-        </Route>
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
-  );
+  const element = useRoutes([
+    {
+      path: "login",
+      element: <Login />,
+    },
+    {
+      path: "/",
+      element: <Admin />,
+      children: [
+        {
+          path: "home",
+          element: <Home />,
+        },
+        {
+          path: "category",
+          element: <Category />,
+        },
+        {
+          path: "product",
+          element: <Product />,
+          children: [
+            {
+              path: "/product",
+              element: <ProductHome />,
+            },
+            {
+              path: "add",
+              element: <AddProduct />,
+            },
+            {
+              path: "detail",
+              element: <ProductDetail />,
+            },
+          ],
+        },
+        {
+          path: "role",
+          element: <Role />,
+        },
+        {
+          path: "user",
+          element: <User />,
+        },
+        {
+          path: "charts/line",
+          element: <Line />,
+        },
+        {
+          path: "charts/bar",
+          element: <Bar />,
+        },
+        {
+          path: "charts/pie",
+          element: <Pie />,
+        },
+        {
+          path: "/",
+          element: <Navigate to="home" />,
+        },
+      ],
+    },
+    {
+      path: "*",
+      element: <NotFound />,
+    },
+  ]);
+  return <div style={{ height: "100%" }}>{element}</div>;
 }
 
 export default App;

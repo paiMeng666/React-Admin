@@ -5,6 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import storgeUntils from "./pages/untils/storgeUntils";
 import memoryUtils from "./pages/untils/memoryUtils";
+import { BrowserRouter } from "react-router-dom";
 
 // 读取本地保存的User,保存在内存
 const user = storgeUntils.getUser();
@@ -13,7 +14,9 @@ memoryUtils.user = user;
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>
 );
 

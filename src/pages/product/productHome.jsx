@@ -1,8 +1,33 @@
-import React from "react";
-import { Card, Button, Select, Input, Table } from "antd";
+import React, { useEffect, useState } from "react";
+import { Card, Button, Select, Input, Table, Space } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
+import mockjs from "mockjs";
+import { reqProductList } from "../../api/index";
+import { useNavigate } from "react-router-dom";
 
 export default function ProductHome() {
+  useEffect(() => {
+    getProductList();
+  }, []);
+
+  const [dataSource, setDataSource] = useState([]);
+  const [searchName, setSearchName] = useState("");
+  const [searchType, setSearchType] = useState("");
+  const navigate = useNavigate();
+
+  const getProductList = () => {
+    reqProductList().then((res) => {
+      const { data } = res;
+      setDataSource(data?.list);
+    });
+  };
+
+  const searchProduct = () => {
+    console.log("searchName", searchName);
+    console.log("searchType", searchType);
+    getProductList();
+  };
+
   const options = [
     {
       label: "按名称搜索",
@@ -15,58 +40,132 @@ export default function ProductHome() {
   ];
   const title = (
     <span>
-      <Select options={options} defaultValue={"1"}></Select>
+      <Select
+        options={options}
+        onChange={(value) => {
+          setSearchType(value);
+        }}
+        defaultValue={"1"}
+      ></Select>
       <Input
         placeholder="关键词"
         style={{ width: 200, margin: "0 15px" }}
+        onChange={(event) => {
+          setSearchName(event.target.value);
+        }}
       ></Input>
-      <Button type="primary">搜素</Button>
+      <Button type="primary" onClick={searchProduct}>
+        搜素
+      </Button>
     </span>
   );
-  const dataSource = [
-    {
-      key: "1",
-      name: "胡彦斌",
-      age: 32,
-      address: "西湖区湖底公园1号",
-    },
-    {
-      key: "2",
-      name: "胡彦祖",
-      age: 42,
-      address: "西湖区湖底公园1号",
-    },
-  ];
 
   const columns = [
     {
-      title: "姓名",
+      title: "商品名称",
       dataIndex: "name",
       key: "name",
     },
     {
-      title: "年龄",
-      dataIndex: "age",
-      key: "age",
+      title: "商品描述",
+      dataIndex: "desc",
+      key: "desc",
     },
     {
-      title: "住址",
-      dataIndex: "address",
-      key: "address",
+      title: "价格",
+      dataIndex: "price",
+      key: "price",
+      render(price) {
+        return <span>¥{price}</span>;
+      },
+    },
+    {
+      title: "状态",
+      dataIndex: "state",
+      key: "state",
+      with: 150,
+      render(text) {
+        return (
+          <div style={{ textAlign: "center" }}>
+            {text === 0 ? (
+              <Button style={{ marginBottom: 8 }} type="primary">
+                下架
+              </Button>
+            ) : (
+              <Button style={{ marginBottom: 8 }} type="primary">
+                上架
+              </Button>
+            )}
+            <div>{text === 0 ? "在售" : "已下架"}</div>
+          </div>
+        );
+      },
+    },
+    {
+      title: "操作",
+      dataIndex: "",
+      key: "operation",
+      with: 150,
+      render(product) {
+        return (
+          <Space>
+            <Button
+              type="link"
+              onClick={() => {
+                navigate("detail", { state: product });
+              }}
+            >
+              详情
+            </Button>
+            <Button
+              type="link"
+              onClick={() => {
+                navigate("add", {
+                  state: {
+                    product,
+                    isUpdate: true,
+                  },
+                });
+              }}
+            >
+              修改
+            </Button>
+          </Space>
+        );
+      },
     },
   ];
+
+  const pagination = {
+    defaultCurrent: 1,
+    pageSize: 5,
+    total: 10,
+    showQuickJumper: true,
+  };
   return (
     <div>
       <Card
         title={title}
         extra={
-          <Button type="primary" icon={<PlusOutlined />}>
-            添加分类
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            onClick={() => {
+              navigate("add");
+            }}
+          >
+            添加商品
           </Button>
         }
         style={{ width: "100%" }}
       >
-        <Table dataSource={dataSource} columns={columns} />
+        <Table
+          bordered
+          rowKey="_id"
+          pagination={pagination}
+          dataSource={dataSource}
+          columns={columns}
+        />
       </Card>
     </div>
   );

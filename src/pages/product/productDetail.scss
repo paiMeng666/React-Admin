@@ -1,0 +1,20 @@
+.product-detail {
+    height: 100%;
+    .list-item {
+        justify-content: flex-start;
+        .left {
+            margin-right: 16px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .product-images {
+            .product-img {
+                width: 200px;
+                height: 200px;
+                border: 1px solid #002140;
+                object-fit: fill;
+                margin-right: 16px;
+            }
+        }
+    }
+}
