@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import storgeUntils from "./pages/untils/storgeUntils";
 import memoryUtils from "./pages/untils/memoryUtils";
 import { BrowserRouter } from "react-router-dom";
+import store from "./redux/store";
 
 // 读取本地保存的User,保存在内存
 const user = storgeUntils.getUser();
